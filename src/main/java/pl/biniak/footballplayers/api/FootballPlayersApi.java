@@ -1,65 +1,49 @@
 package pl.biniak.footballplayers.api;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pl.biniak.footballplayers.base.FootballPlayer;
-import pl.biniak.footballplayers.enums.Nationality;
-import pl.biniak.footballplayers.enums.PositionOnPitch;
+import pl.biniak.footballplayers.entity.FootballPlayer;
+import pl.biniak.footballplayers.manager.FootballPlayerManager;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/api/players")
 public class FootballPlayersApi {
 
-  private List<FootballPlayer> footballPlayers;
+  private FootballPlayerManager footballPlayers;
 
-  public FootballPlayersApi() {
-    footballPlayers = new ArrayList<>();
-    footballPlayers.add(new FootballPlayer("Lionel",
-        "Messi",
-        169L,
-        PositionOnPitch.STRIKER,
-        Nationality.ARGENTINA,
-        130L,
-        LocalDate.of(1987, 6, 24),
-        true));
-    footballPlayers.add(new FootballPlayer("Zinedine",
-        "Zidane",
-        185L,
-        PositionOnPitch.MIDFIELDER,
-        Nationality.FRANCE,
-        130L,
-        LocalDate.of(1972, 6, 23),
-        false));
+  public FootballPlayersApi(FootballPlayerManager footballPlayerManager) {
+    this.footballPlayers = footballPlayerManager;
   }
 
+  @Autowired
+
+
   @GetMapping("/all")
-  public List<FootballPlayer> getAllPlayers() {
-    return footballPlayers;
+  public Iterable<FootballPlayer> getAllPlayers() {
+    return footballPlayers.findAll();
   }
 
   @GetMapping
-  public Stream<FootballPlayer> getActivePlayers(@RequestParam boolean active) {
-    return footballPlayers.stream().filter(FootballPlayer -> FootballPlayer.isActive() == active);
+  public List<FootballPlayer> getActivePlayers(@RequestParam boolean active) {
+    return footballPlayers.findByActivity(active);
   }
 
   @PostMapping
-  public boolean addPlayer(@RequestBody FootballPlayer footballPlayer) {
-    return footballPlayers.add(footballPlayer);
+  public FootballPlayer addPlayer(@RequestBody FootballPlayer footballPlayer) {
+    return footballPlayers.savePlayer(footballPlayer);
   }
 
   @PutMapping
-  public boolean updatePlayer(@RequestBody FootballPlayer footballPlayer) {
-    footballPlayers.removeIf(FootballPlayer -> FootballPlayer.getSurname().equals(footballPlayer.getSurname()));
-    return footballPlayers.add(footballPlayer);
+  public void updatePlayer(@RequestBody FootballPlayer footballPlayer) {
+    footballPlayers.deletePlayer(footballPlayer.getSurname());
+    footballPlayers.savePlayer(footballPlayer);
   }
 
   @DeleteMapping
-  public boolean deletePlayer(@RequestParam String surname) {
-    return footballPlayers.removeIf(FootballPlayer -> FootballPlayer.getSurname().equals(surname));
+  public void deletePlayer(@RequestParam String surname) {
+    footballPlayers.deletePlayer(surname);
   }
 
 }

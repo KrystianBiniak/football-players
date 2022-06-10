@@ -1,4 +1,4 @@
-package pl.biniak.footballplayers.base;
+package pl.biniak.footballplayers.entity;
 
 import pl.biniak.footballplayers.enums.Nationality;
 import pl.biniak.footballplayers.enums.PositionOnPitch;
@@ -14,7 +14,6 @@ public class FootballPlayer {
 
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Id
-
   private String name;
   private String surname;
   private Long cmHeight;
