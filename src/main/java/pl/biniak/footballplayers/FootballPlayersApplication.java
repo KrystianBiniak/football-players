@@ -7,7 +7,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class    FootballPlayersApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(FootballPlayersApplication.class, args);
+
+		try {
+			SpringApplication.run(FootballPlayersApplication.class, args);
+		}
+		catch (Throwable exception) {
+			exception.printStackTrace();
+		}
 	}
 
 }
