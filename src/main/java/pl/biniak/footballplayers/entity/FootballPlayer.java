@@ -14,6 +14,7 @@ public class FootballPlayer {
 
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Id
+  private Long id;
   private String name;
   private String surname;
   private Long cmHeight;
@@ -27,7 +28,8 @@ public class FootballPlayer {
   public FootballPlayer() {
   }
 
-  public FootballPlayer(String name, String surname, Long cmHeight, PositionOnPitch positionOnPitch, Nationality nationality, Long goalsScored, LocalDate bornIn, boolean active) {
+  public FootballPlayer(Long id, String name, String surname, Long cmHeight, PositionOnPitch positionOnPitch, Nationality nationality, Long goalsScored, LocalDate bornIn, boolean active) {
+    this.id = id;
     this.name = name;
     this.surname = surname;
     this.cmHeight = cmHeight;

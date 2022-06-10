@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 public class FootballPlayerManager {
 
-  private final FootballPlayerRepo footballPlayerRepo;
+  private FootballPlayerRepo footballPlayerRepo;
 
   @Autowired
   public FootballPlayerManager(FootballPlayerRepo footballPlayerRepo) {
@@ -26,8 +26,8 @@ public class FootballPlayerManager {
   public List<FootballPlayer> findByActivity(boolean active) {
     Iterable<FootballPlayer> players = findAll();
     List<FootballPlayer> selectedPlayers = new ArrayList<>();
-    for(FootballPlayer footballPlayer : players) {
-      if(footballPlayer.isActive() == active) {
+    for (FootballPlayer footballPlayer : players) {
+      if (footballPlayer.isActive() == active) {
         selectedPlayers.add(footballPlayer);
       }
     }
@@ -48,7 +48,8 @@ public class FootballPlayerManager {
 
   @EventListener(ApplicationReadyEvent.class)
   public void fillDB() {
-    savePlayer(new FootballPlayer("Zinedine",
+    savePlayer(new FootballPlayer(1L,
+        "Zinedine",
         "Zidane",
         185L,
         PositionOnPitch.MIDFIELDER,
@@ -56,7 +57,8 @@ public class FootballPlayerManager {
         130L,
         LocalDate.of(1972, 6, 23),
         false));
-    savePlayer(new FootballPlayer("Lionel",
+    savePlayer(new FootballPlayer(2L,
+        "Lionel",
         "Messi",
         169L,
         PositionOnPitch.STRIKER,

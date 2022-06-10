@@ -13,12 +13,10 @@ public class FootballPlayersApi {
 
   private FootballPlayerManager footballPlayers;
 
+  @Autowired
   public FootballPlayersApi(FootballPlayerManager footballPlayerManager) {
     this.footballPlayers = footballPlayerManager;
   }
-
-  @Autowired
-
 
   @GetMapping("/all")
   public Iterable<FootballPlayer> getAllPlayers() {
