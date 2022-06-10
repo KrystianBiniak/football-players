@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 public class FootballPlayerManager {
 
-  private FootballPlayerRepo footballPlayerRepo;
+  private final FootballPlayerRepo footballPlayerRepo;
 
   @Autowired
   public FootballPlayerManager(FootballPlayerRepo footballPlayerRepo) {
@@ -24,7 +24,7 @@ public class FootballPlayerManager {
   }
 
   public List<FootballPlayer> findByActivity(boolean active) {
-    Iterable<FootballPlayer> players = footballPlayerRepo.findAll();
+    Iterable<FootballPlayer> players = findAll();
     List<FootballPlayer> selectedPlayers = new ArrayList<>();
     for(FootballPlayer footballPlayer : players) {
       if(footballPlayer.isActive() == active) {
