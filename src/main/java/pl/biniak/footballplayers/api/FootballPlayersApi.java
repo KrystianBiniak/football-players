@@ -1,9 +1,6 @@
 package pl.biniak.footballplayers.api;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.biniak.footballplayers.base.FootballPlayer;
 import pl.biniak.footballplayers.enums.Nationality;
 import pl.biniak.footballplayers.enums.PositionOnPitch;
@@ -11,6 +8,7 @@ import pl.biniak.footballplayers.enums.PositionOnPitch;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/api/players")
@@ -43,10 +41,25 @@ public class FootballPlayersApi {
     return footballPlayers;
   }
 
-  @GetMapping("/active")
-  public List<FootballPlayer> getActivePlayers(@RequestParam boolean active) {
-    return footballPlayers.stream().
-        filter(FootballPlayer -> FootballPlayer.isActive() == active).toList();
+  @GetMapping
+  public Stream<FootballPlayer> getActivePlayers(@RequestParam boolean active) {
+    return footballPlayers.stream().filter(FootballPlayer -> FootballPlayer.isActive() == active);
+  }
+
+  @PostMapping
+  public boolean addPlayer(@RequestBody FootballPlayer footballPlayer) {
+    return footballPlayers.add(footballPlayer);
+  }
+
+  @PutMapping
+  public boolean updatePlayer(@RequestBody FootballPlayer footballPlayer) {
+    footballPlayers.removeIf(FootballPlayer -> FootballPlayer.getSurname().equals(footballPlayer.getSurname()));
+    return footballPlayers.add(footballPlayer);
+  }
+
+  @DeleteMapping
+  public boolean deletePlayer(@RequestParam String surname) {
+    return footballPlayers.removeIf(FootballPlayer -> FootballPlayer.getSurname().equals(surname));
   }
 
 }
