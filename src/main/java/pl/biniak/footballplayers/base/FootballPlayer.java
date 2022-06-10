@@ -3,9 +3,17 @@ package pl.biniak.footballplayers.base;
 import pl.biniak.footballplayers.enums.Nationality;
 import pl.biniak.footballplayers.enums.PositionOnPitch;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.time.LocalDate;
 
+@Entity
 public class FootballPlayer {
+
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Id
 
   private String name;
   private String surname;
