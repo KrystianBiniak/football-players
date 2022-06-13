@@ -42,8 +42,8 @@ public class FootballPlayerManager {
     return footballPlayerRepo.save(footballPlayer);
   }
 
-  public void deletePlayer(String surname) {
-    footballPlayerRepo.deleteById(surname);
+  public void deletePlayer(Long id) {
+    footballPlayerRepo.deleteById(id);
   }
 
   @EventListener(ApplicationReadyEvent.class)

@@ -35,13 +35,13 @@ public class FootballPlayersApi {
 
   @PutMapping
   public void updatePlayer(@RequestBody FootballPlayer footballPlayer) {
-    footballPlayers.deletePlayer(footballPlayer.getSurname());
+    //footballPlayers.deletePlayer(footballPlayer.get);
     footballPlayers.savePlayer(footballPlayer);
   }
 
   @DeleteMapping
-  public void deletePlayer(@RequestParam String surname) {
-    footballPlayers.deletePlayer(surname);
+  public void deletePlayer(@RequestParam Long id) {
+    footballPlayers.deletePlayer(id);
   }
 
 }
